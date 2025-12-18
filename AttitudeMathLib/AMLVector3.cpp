@@ -126,20 +126,44 @@ namespace AML {
   //
   // Applies the scalar to each component.
   // ============================================================
-  Vector3 operator+(const Vector3& lhs, double s);
-  Vector3 operator-(const Vector3& lhs, double s);
-  Vector3 operator*(const Vector3& lhs, double s);
-  Vector3 operator/(const Vector3& lhs, double s);
+  Vector3 operator+(const Vector3& lhs, double s)
+	{
+		return (Vector3(lhs) += s);
+	}
+  Vector3 operator-(const Vector3& lhs, double s)
+	{
+		return (Vector3(lhs) -= s);
+	}
+  Vector3 operator*(const Vector3& lhs, double s)
+	{
+		return (Vector3(lhs) *= s);
+	}
+  Vector3 operator/(const Vector3& lhs, double s)
+	{
+		return (Vector3(lhs) /= s);
+	}
 
   // ============================================================
   // Vector-scalar operators (scalar on the left)
   //
   // These exist for symmetry
   // ============================================================
-  Vector3 operator+(double s, Vector3& rhs);
-  Vector3 operator-(double s, Vector3& rhs);
-  Vector3 operator*(double s, Vector3& rhs);
-  Vector3 operator/(double s, Vector3& rhs);
+  Vector3 operator+(double s, Vector3& rhs)
+	{
+		return (Vector3(s) += rhs);
+	}
+  Vector3 operator-(double s, Vector3& rhs)
+	{
+		return (Vector3(s) -= rhs);
+	}
+  Vector3 operator*(double s, Vector3& rhs)
+	{
+		return (Vector3(s) *= rhs);
+	}
+  Vector3 operator/(double s, Vector3& rhs)
+	{
+		return (Vector3(s) /= rhs);
+	}
 
 
   // ============================================================
@@ -147,26 +171,59 @@ namespace AML {
   // ============================================================
 
   // Euclidean length (magnitude) of the vector
-  double norm(const Vector3& rhs);
+  double norm(const Vector3& rhs)
+	{
+		return sqrt(rhs.x*rhs.x + rhs.y*rhs.y + rhs.z*rhs.z);
+	}
 
   // Normalizes the vector in place
-  void normalize(Vector3& rhs);
+  void normalize(Vector3& rhs)
+	{
+		double mag = norm(rhs);
+		if (mag > 0.0)
+		{
+			rhs /= mag;
+		}
+	}
 
   // Returns a normalized copy of the input vector
   // Does not modify the original.
-  Vector3 unit(const Vector3& rhs);
+  Vector3 unit(const Vector3& rhs)
+	{
+		double mag = norm(rhs);
+		if (mag > 0.0)
+		{
+			return (Vector3(rhs) /= mag);
+		}
+		return rhs;
+	}
 
   // Cross product
-  Vector3 cross(const Vector3& lhs, const Vector3& rhs);
+  Vector3 cross(const Vector3& lhs, const Vector3& rhs)
+	{
+		// lhs x y z
+		// rhs x y z
+		double x = (lhs.y * rhs.z) - (lhs.z * rhs.y);
+		double y = (lhs.x * rhs.z) - (lhs.z * rhs.x);
+		double z = (lhs.x * rhs.y) - (lhs.y * rhs.x);
+		return Vector3(x, y, z);
+	}
 
   // Dot product
-  double dot(const Vector3& lhs, const Vector3& rhs);
+  double dot(const Vector3& lhs, const Vector3& rhs)
+	{
+		return (rhs.x * lhs.x + rhs.y * lhs.y + rhs.z * lhs.z);
+	}
 
   // ============================================================
   // Stream output
   // Allows:
   // std::cout << v;
   // ============================================================
-  std::ostream& operator<<(std::ostream& os, const Vector3& obj);
+  std::ostream& operator<<(std::ostream& os, const Vector3& obj)
+	{
+		os << "[" << obj.x << ", " << obj.y << ", " << obj.z << "]";
+		return os;
+	}
 
 } // AML
