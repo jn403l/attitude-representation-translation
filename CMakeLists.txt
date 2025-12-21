@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# On switch for CTest
+enable_testing()
+
 # Sub directories
 add_subdirectory(AttitudeMathLib)
 add_subdirectory(test)
