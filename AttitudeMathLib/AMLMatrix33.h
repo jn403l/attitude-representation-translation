@@ -124,7 +124,7 @@ namespace AML
   // Applies the linear transformation represented by the matrix
   // to a Vector3.
   // ============================================================
-  Matrix33 operator*(const Matrix33& lhs, const Vector3& rhs);
+  Vector3 operator*(const Matrix33& lhs, const Vector3& rhs);
 
   // ============================================================
   // Matrix-scalar operators
